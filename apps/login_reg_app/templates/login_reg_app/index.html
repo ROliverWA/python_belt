@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{% static 'login_reg_app/js/main.js' %}"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Login and Registration</title>
+    <style>
+        .jumbotron {
+            background-color:white;
+            color: green;
+        }
+
+        .entry {
+            margin-top: 5px;
+        }
+
+        .header {
+            margin-top: -35px;
+        }
+
+       
+
+    </style>
+</head>
+<body>
+    <div id="container" class="container">
+         
+        <div class='row header'>                
+            <div class='col-6 test' id="reg_side">
+                <div class='row'>
+                        
+                <div class= 'jumbotron col-6' id='reg_jumbo'><h1>Registration</h1> 
+                    <p id='ajax_email'></p>
+                    {% if 'register' in request.session.errors.keys %}                   
+                    {% for error, value in request.session.errors.items %}                    
+                    <p><h6 style='color: red; margin: 0px;'>{{value}}</h6></p>
+                    {% endfor %}
+                    {%endif%}
+                </div>
+                </div>         
+                        
+                <div class='row'>                        
+                    <form class='header' action='/validate' method="post" id="reg_form"> 
+                        {% csrf_token %}                                    
+                        <div class="form-group row">                                                                              
+                            <label for="reg_fname" class='col-5 col-form-label entry'>First Name</label>                           
+                            <input type="text" class="form-control-sm col-7 entry form_field" id="reg_fname" name='fname'>
+                        </div>
+                        <div class="form-group row">
+                            <label for="reg_lname"class='col-5 col-form-label entry'>Last Name</label>
+                            <input type="text" class="form-control-sm col-7 entry form_field" id="reg_lname" name='lname'>
+                        </div>
+                        <div class="form-group row">
+                            <label for="reg_email" class='col-5 col-form-label entry'>Email</label>
+                            <input type="email" class="form-control-sm col-7 entry form_field" id="reg_email" name='email'>
+                        </div>
+                        <div class="form-group row">
+                            <label for="reg_pw" class='col-5 col-form-label entry'>Password</label>
+                            <input type="password" class="form-control-sm col-7 entry form_field" id="reg_pw" name='pw'>
+                        </div>
+                        <div class="form-group row">
+                            <label for="reg_conf" class='col-5 col-form-label entry'>Confirm PW</label>
+                            <input type="password" class="form-control-sm col-7 entry form_field" id="reg_conf" name='conf'>
+                        </div>
+                        <div class="form-group row justify-content-center">
+                            <input type="submit" class="btn btn-outline-success entry form_field" value="Submit" id='reg_submit'>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class='col-6 test2' id="log_side">
+                <div class='row '>
+                        <div class= 'jumbotron col-6'><h1>Login</h1>
+                            {% if 'login' in request.session.errors.keys %}
+                            {% for error, value in request.session.errors.items %}                            
+                                <p><h6 style='color: red;'>{{value}}</h6></p>
+                            {% endfor %}
+                            {%endif%}
+                        
+                        </div>
+                </div>        
+                <div class='row'>
+                    <form class='header' action='/validate_exists' method="post">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <label for="log_email" class='col-5 col-form-label'>Email</label>
+                            <input type="email" class="form-control-sm col-7" id="log_email" name='email'>
+                        </div>
+                        <div class="form-group row">
+                            <label for="log_pw" class='col-5 col-form-label'>Password</label>
+                            <input type="password" class="form-control-sm col-7" id="log_pw" name='pw'>
+                        </div>
+                            <div class="form-group row justify-content-center">
+                            <input type="submit" class="btn btn-outline-success " value="Submit">
+                        </div>
+                    </form>
+
+            </div>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

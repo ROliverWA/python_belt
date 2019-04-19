@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>dotNet Flix</title>
+    <style>
+        table, tr, td {
+            border: 1px solid black;
+            margin-left: 20px;
+            padding: 2px;
+        }        
+    </style>
+    <script>
+        $(document).ready(function(){
+            $('#create_trip').click(function(){                
+                window.location.replace("/trip/new");
+            })
+        })
+    </script>
+</head>
+<body>
+    <div class='wrapper'>
+            <div class='container-fluid' style='margin: 0px; padding-top: 10px;'>
+                <div class="row">
+                    <div class="col-6">
+                    <h2 class='heading_text'>Hello {{request.session.fname}}</h2>
+                    </div>
+                    <div class='col-3'></div>
+                    <div class="col-2" style= 'padding-top: 25px;'>
+                        <a href="/logout">Logout  <span style='color:black;'>|  </span> </a><button id="create_trip" style='box-shadow:2px 2px black; width: 150px; height: 2Spx;'>Create an new trip!</button>
+                    </div>                   
+                </div>
+                <div class='row'>
+                    <div class='col-12'>Your trips:</div>
+                </div>             
+                <div class='row'>
+                    <div class='col-4' style=" margin-left: 15px; height: 200px; width: 300px;">
+                           <table>
+                                <tr>
+                                    <td>Destination</td><td>Start Date</td><td>End Date</td><td>Plan</td><td>Actions</td>
+                                </tr>
+                                {% for event in events.all%}                                    
+                                    {%if event.host.id == request.session.uid %}
+                                        <tr>
+                                            <td><a href="/trip/detail/{{event.id}}">{{event.dest}}</a></td><td>{{event.start}}</td><td>{{event.end}}</td><td>{{event.plan}}</td><td><a href="/trip/remove/{{event.id}}">Remove</a>|<a href="/trip/edit/{{event.id}}">Edit</a></td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td><a href="/trip/detail/{{event.id}}">{{event.dest}}</a></td><td>{{event.start}}</td><td>{{event.end}}</td><td>{{event.plan}}</td><td><a href="/trip/pass/{{event.id}}">Cancel</a></td>
+                                        </tr>
+                                    {%endif%}
+                                {% endfor %}
+
+
+                              
+                        </div>
+
+
+                                </table>
+                    </div>
+                    <div class='col-3'></div>
+                    
+                </div>
+                <div class='row'>
+                    <h2 style="margin:20px;">Other People Trips</h2>
+                </div>
+                <div class='row'>
+                    <table>
+                        <tr>
+                            <td>Destination</td><td>Start Date</td><td>End Date</td><td>Plan</td><td>Actions</td>
+                        </tr>
+                        {% for event in notin.all%}
+                        <tr>
+                            <td><a href="/trip/detail/{{event.id}}">{{event.dest}}</a></td><td>{{event.start}}</td><td>{{event.end}}</td><td>{{event.plan}}</td><td><a href="/trip/join/{{event.id}}">Join</a></td>
+                        </tr>
+                        {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
